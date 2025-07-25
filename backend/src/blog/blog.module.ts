@@ -3,7 +3,7 @@ import { BlogService } from './blog.service';
 import { BlogController } from './blog.controller';
 
 @Module({
-  providers: [BlogService],
   controllers: [BlogController],
+  providers: [BlogService],
 })
 export class BlogModule {}
