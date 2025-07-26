@@ -24,7 +24,6 @@ export class AuthService {
 
   async login(authDto: AuthDto) {
     const user = await this.validateUser(authDto.username, authDto.password);
-    console.log(user);
     return this.signToken(user.id, user.username);
   }
   async signToken(

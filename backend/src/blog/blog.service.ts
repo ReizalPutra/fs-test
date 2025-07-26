@@ -8,27 +8,28 @@ import { NotFoundException } from '@nestjs/common';
 @Injectable()
 export class BlogService {
   constructor(private prisma: PrismaService) {}
-  // async create(createBlogDto: CreateBlogDto) {
-  //   const slug = await generateUniqueSlug(
-  //     createBlogDto.title,
-  //     async (slug: string) => {
-  //       const existing = await this.prisma.blog.findUnique({ where: { slug } });
-  //       return !!existing;
-  //     },
-  //   );
 
-  //   const data = await this.prisma.blog.create({
-  //     data: {
-  //       title: createBlogDto.title,
-  //       content: createBlogDto.content,
-  //       slug,
-  //     },
-  //   });
-  //   return {
-  //     message: `Blog successfully created`,
-  //     data: data,
-  //   };
-  // }
+  async create(createBlogDto: CreateBlogDto, authorId: string) {
+    const slug = await generateUniqueSlug(
+      createBlogDto.title,
+      async (slug: string) => {
+        const existing = await this.prisma.blog.findUnique({ where: { slug } });
+        return !!existing;
+      },
+    );
+    const data = await this.prisma.blog.create({
+      data: {
+        title: createBlogDto.title,
+        content: createBlogDto.content,
+        slug,
+        authorId: authorId,
+      },
+    });
+    return {
+      message: `Blog successfully created`,
+      data: data,
+    };
+  }
 
   async findAll() {
     return await this.prisma.blog.findMany();
