@@ -17,10 +17,10 @@ import { UpdateBlogDto } from './dto/update-blog.dto';
 export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
-  @Post()
-  create(@Body() createBlogDto: CreateBlogDto) {
-    return this.blogService.create(createBlogDto);
-  }
+  // @Post()
+  // create(@Body() createBlogDto: CreateBlogDto) {
+  //   return this.blogService.create(createBlogDto);
+  // }
 
   @Get()
   findAll() {

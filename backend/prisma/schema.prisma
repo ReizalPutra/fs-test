@@ -13,12 +13,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id  String @id @default(uuid())
+  username String @unique
+  password String
+  refreshToken String?
+  blogs Blog[]
+  
+  @@map("users")
+}
+
 model Blog{
   id        Int      @default(autoincrement()) @id
+  author   User @relation(fields: [authorId], references: [id])
+  authorId String
   title     String
   content   String?
   slug      String @unique
   publishedAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
   @@map("blogs")
 }
