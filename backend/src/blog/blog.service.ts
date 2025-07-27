@@ -35,13 +35,13 @@ export class BlogService {
     return await this.prisma.blog.findMany();
   }
 
-  async findOne(id: number) {
+  async findOne(slug: string) {
     const blog = await this.prisma.blog.findUnique({
-      where: { id },
+      where: { slug },
     });
 
     if (!blog) {
-      throw new NotFoundException(`Blog with ID ${id} not found`);
+      throw new NotFoundException(`Blog with slug ${slug} not found`);
     }
 
     return blog;

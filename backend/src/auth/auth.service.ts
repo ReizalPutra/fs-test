@@ -29,7 +29,7 @@ export class AuthService {
   async signToken(
     userId: string,
     username: string,
-  ): Promise<{ access_token: string }> {
+  ): Promise<{ user_id: string; user_name: string; access_token: string }> {
     const payload = {
       sub: userId,
       username,
@@ -42,6 +42,8 @@ export class AuthService {
     });
 
     return {
+      user_id: userId,
+      user_name: username,
       access_token: token,
     };
   }
