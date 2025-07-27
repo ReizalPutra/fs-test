@@ -1,39 +1,69 @@
-# Full-stack Developer Intern Code Test
+## 🛠️ Installation & Setup Instructions
 
-**Objective:** Create a Simple Blog CMS Website using Nest.js/Laravel/Next.js/React.js. 
+### 1. **Clone the Repository**
 
-## Requirements:
+```bash
+git clone <your-repository-url>
+cd <your-repository-folder>
+```
 
-1. Implement slug generation based on the blog title.
-2. The slug link must be unique and have increment in last word if slug already exists in database.
-3. Implement authentication for the admin user (no registration required, only one predefined admin user in the database)
-4. Each blog post should have a title, content, slug, and published date.
-5. The system should not have any downtime and must operate as fast as possible.
+---
 
-## Instructions:
+### 2. **Backend Setup (NestJS)**
 
-1. Provide API endpoints for managing blog posts.
-2. Implement authentication for the admin user.
-3. Build an simple admin dashboard for blog management.
-4. Create a landing page listing all blog posts and blog detail.
-5. Ensure a clean and responsive UI.
-6. Document your API endpoints and include a README file with setup instructions.
-7. Document your API using Postman or Swagger.
+```bash
+cd backend
 
-## Evaluation:
+# Copy the environment file
+cp .env.example .env
 
-Your solution will be evaluated based on the following criteria:
+# Install dependencies
+npm install
 
-- Code quality and organization
-- Adherence to the project requirements
-- Use of best practices for API design and security
-- Efficiency of the implemented solution
-- Completeness of the tests and documentation
-- Use of caching mechanisms is considered a plus point
-- Using a migration file for MySQL is considered a plus point
+# Run database migration
+npx prisma migrate dev --name init
 
-## Submission Instructions
+# Seed the admin user
+npx prisma db seed
 
-- Clone the provided GitHub repository to your personal account. After you have completed the test, send your code to effendy@vodea.id, including setup instructions for the project in the README file and postman collection if using postman as API Documentation.
-- Include the predifined admin user credential in README File.
-- Ensure your submission is submitted within a maximum of 4 days after you receive the email.
+# Start the backend server
+npm run start:dev
+```
+
+> Backend running at: [http://localhost:3000](http://localhost:3000)
+
+---
+
+### 3. **Frontend Setup (React + React Router)**
+
+```bash
+cd ../frontend
+
+# Copy the environment file
+cp .env.example .env
+
+# Install dependencies
+npm install
+
+# Start the frontend server
+npm run dev
+```
+
+> Frontend running at: [http://localhost:5173](http://localhost:5173)
+
+---
+
+### 4. **Admin Login Access**
+
+Use the following seeded admin credentials:
+
+```
+Username: reizalAdmin
+Password: Admin1234
+```
+
+---
+
+### 5. **API Documentation (Swagger)**
+
+Available at: [http://localhost:3000/api](http://localhost:3000/api)

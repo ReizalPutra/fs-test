@@ -4,9 +4,9 @@ import { commitSession, getSession } from "~/libs/session";
 import type { Route } from "./+types/edit";
 import type { i } from "node_modules/@react-router/dev/dist/routes-DHIOx0R9";
 import { useState } from "react";
-
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export async function loader({ params }: Route.LoaderArgs) {
-  const res = await fetch(`http://localhost:3000/api/blog/${params.slug}`);
+  const res = await fetch(`${API_BASE_URL}/blog/${params.slug}`);
   const data = await res.json();
   return data;
 }
@@ -25,7 +25,7 @@ export async function action({ request }: Route.ActionArgs) {
   const content = form.get("content");
   const id = form.get("id");
 
-  const res = await fetch(`http://localhost:3000/api/blog/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/blog/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

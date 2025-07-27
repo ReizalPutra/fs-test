@@ -2,17 +2,26 @@ import React from "react";
 import type { Route } from "./+types/blogList";
 import { Link } from "react-router";
 import { format } from "date-fns";
+import { API_BASE_URL } from "~/libs/api";
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
-  const res = await fetch(`http://localhost:3000/api/blog`);
+  const res = await fetch(`${API_BASE_URL}/blog`);
   const data = await res.json();
-  console.log(data);
   return data;
 }
 
 // HydrateFallback is rendered while the client loader is running
 export function HydrateFallback() {
-  return <div>Loading...</div>;
+  return (
+    <div
+      className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+      role="status"
+    >
+      <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+        Loading...
+      </span>
+    </div>
+  );
 }
 
 export default function blogList({ loaderData }: Route.ComponentProps) {

@@ -2,14 +2,13 @@ import React from "react";
 import type { Route } from "./+types/login";
 import { commitSession, getSession } from "~/libs/session";
 import { data, Form, redirect } from "react-router";
+import { API_BASE_URL } from "~/libs/api";
 
 export async function loader({ request }: Route.ActionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
-  console.log(request.headers.get("Cookie"));
   if (session.has("accessToken")) {
     return redirect("/admin");
   }
-  console.log("gak ada coyyy");
   return data(
     { error: session.get("error") },
     {
@@ -25,7 +24,7 @@ export async function action({ request }: Route.ActionArgs) {
   const username = form.get("username");
   const password = form.get("password");
 
-  const res = await fetch("http://localhost:3000/api/auth/login", {
+  const res = await fetch(`${API_BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -43,7 +42,7 @@ export async function action({ request }: Route.ActionArgs) {
   }
 
   session.set("accessToken", result.data.access_token);
-  console.log(await commitSession(session));
+
   return redirect("/admin", {
     headers: {
       "Set-Cookie": await commitSession(session),
@@ -60,13 +59,27 @@ export default function login({ loaderData }: Route.ComponentProps) {
       <Form method="POST" className="flex flex-col gap-5">
         <h1 className="text-2xl font-bold">Login</h1>
         <label>
-          Username: <input type="text" name="username" className="border rounded p-2 w-full" />
+          Username:{" "}
+          <input
+            type="text"
+            name="username"
+            className="border rounded p-2 w-full"
+          />
         </label>
         <label>
           Password:
-          <input type="password" name="password" className="border rounded p-2 w-full"/>
+          <input
+            type="password"
+            name="password"
+            className="border rounded p-2 w-full"
+          />
         </label>
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Sign in</button>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+        >
+          Sign in
+        </button>
       </Form>
     </div>
   );

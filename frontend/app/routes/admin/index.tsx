@@ -1,7 +1,8 @@
-import { format } from 'date-fns'
+import { format } from "date-fns";
 import type { Route } from "./+types/index";
 import { getSession } from "~/libs/session";
 import { redirect } from "react-router";
+import { API_BASE_URL } from "~/libs/api";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const cookieHeader = request.headers.get("Cookie");
@@ -11,7 +12,7 @@ export async function loader({ request }: Route.LoaderArgs) {
     throw redirect("/login");
   }
 
-  const res = await fetch(`http://localhost:3000/api/blog`);
+  const res = await fetch(`${API_BASE_URL}/blog`);
 
   if (!res.ok) {
     throw new Response("Failed to fetch user", { status: res.status });
@@ -53,7 +54,9 @@ export default function indexPage({ loaderData }: Route.ComponentProps) {
               <td className="px-4 py-2 text-sm text-gray-300">{i + 1}</td>
               <td className="px-4 py-2 text-sm text-gray-300">{blog.title}</td>
               <td className="px-4 py-2 text-sm text-gray-300">{blog.slug}</td>
-              <td className="px-4 py-2 text-sm text-gray-300">{format(new Date(blog.publishedAt), 'dd/MM/yyyy HH:mm:ss')}</td>
+              <td className="px-4 py-2 text-sm text-gray-300">
+                {format(new Date(blog.publishedAt), "dd/MM/yyyy HH:mm:ss")}
+              </td>
               <td className="py-2 text-sm">
                 <div className="flex gap-2">
                   <a

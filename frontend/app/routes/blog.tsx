@@ -1,18 +1,17 @@
 import React from "react";
 import type { Route } from "./+types/blog";
+import { API_BASE_URL } from "~/libs/api";
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
-  const res = await fetch(`http://localhost:3000/api/blog/${params.slug}`);
+  const res = await fetch(`${API_BASE_URL}/blog/${params.slug}`);
   const data = await res.json();
   return data;
 }
 
-// Fallback saat loading
 export function HydrateFallback() {
   return <div>Loading...</div>;
 }
 
-// Komponen utama
 export default function BlogPage({ loaderData }: Route.ComponentProps) {
   if (!loaderData) {
     return <div>Data tidak ditemukan</div>;

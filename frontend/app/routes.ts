@@ -17,7 +17,7 @@ export default [
     ...prefix("admin", [
       index("routes/admin/index.tsx"),
       
-      route("create-blog", "routes/admin/blog-create.tsx"),
+      route("create-blog", "routes/admin/blog/create.tsx"),
       route("blog/:id/delete", "routes/admin/blog/delete.tsx"),
       route("blog/:slug/edit", "routes/admin/blog/edit.tsx"),
     ]),

@@ -1,6 +1,6 @@
-
 import { getSession } from "~/libs/session";
 import type { Route } from "./+types/delete";
+import { API_BASE_URL } from "~/libs/api";
 
 export async function action({ request, params }: Route.ActionArgs) {
   const cookieHeader = request.headers.get("Cookie");
@@ -9,7 +9,7 @@ export async function action({ request, params }: Route.ActionArgs) {
 
   const blogId = params.id;
 
-  const res = await fetch(`http://localhost:3000/api/blog/${blogId}`, {
+  const res = await fetch(`${API_BASE_URL}/blog/${blogId}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,

@@ -1,6 +1,7 @@
 import { Form, redirect, useActionData } from "react-router";
-import type { Route } from "./+types/blog-create";
+import type { Route } from "./+types/create";
 import { commitSession, getSession } from "~/libs/session";
+import { API_BASE_URL } from "~/libs/api";
 
 export async function action({ request }: Route.ActionArgs) {
   const cookieHeader = request.headers.get("Cookie");
@@ -9,7 +10,7 @@ export async function action({ request }: Route.ActionArgs) {
   let form = await request.formData();
   const title = form.get("title");
   const content = form.get("content");
-  const res = await fetch("http://localhost:3000/api/blog", {
+  const res = await fetch(`${API_BASE_URL}/blog`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -27,12 +28,11 @@ export async function action({ request }: Route.ActionArgs) {
     };
   }
   session.flash("success", "Blog berhasil diposting!");
-  return {
+  return redirect("/admin", {
     headers: {
       "Set-Cookie": await commitSession(session),
     },
-    success: "Blog berhasil diposting!",
-  };
+  });
 }
 export default function BlogCreatePage() {
   const actionData = useActionData() as { error?: string; success?: string };
